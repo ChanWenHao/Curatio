@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale=1">
+        <title>{% block title %}Curatio{% endblock %}</title>
+        {% block stylesheets %}
+                <link rel="stylesheet" href="{{ asset('css/mainStylesheetV4.css') }}" type="text/css" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+
+    <body>
+        <header>
+            <h1>Curatio</h1>
+            {#<p>layout_base</p>#}
+        </header>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{{ path('pc_exchange_home') }}">home</a></li>
+                <li><a href="">hall of fame</a></li>
+                <li><a href="">BOTD</a></li>
+                <li><a href="">BOTM</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li>
+                        Hello <a href="">{{ app.user.username }}</a>
+                        <a href="{{ path('logout') }}">logout</a>
+                    </li>
+                {% else %}
+                    <li><a href=" {{ path('login') }} ">login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% block body %}
+        {% endblock %}
+
+        <footer>
+            <p>footer_base</p>
+        </footer>
+
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+
+</html>

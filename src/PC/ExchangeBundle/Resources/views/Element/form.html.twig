@@ -1,0 +1,72 @@
+{% extends "@PCExchange/layout.html.twig" %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+        <div>
+            {{ form_label(form.title) }}
+            {{ form_errors(form.title) }}
+            {{ form_widget(form.title) }}
+
+            {{ form_label(form.type) }}
+            {{ form_errors(form.type) }}
+            {{ form_widget(form.type) }}
+
+            {{ form_label(form.categories) }}
+            {{ form_errors(form.categories) }}
+            {{ form_widget(form.categories) }}
+
+            {{ form_errors(form.elementArtists) }}
+            {{ form_widget(form.elementArtists) }}
+            <a href="#" id="addArtist">Ajouter un auteur</a>
+
+            {{ form_label(form.publisher) }}
+            {{ form_errors(form.publisher) }}
+            {{ form_widget(form.publisher) }}
+
+            {{ form_label(form.publicationDate) }}
+            {{ form_errors(form.publicationDate) }}
+            {{ form_widget(form.publicationDate) }}
+
+            {{ form_label(form.synopsis) }}
+            {{ form_errors(form.synopsis) }}
+            {{ form_widget(form.synopsis) }}
+
+            {{ form_label(form.image) }}
+            {{ form_errors(form.image) }}
+            {{ form_widget(form.image) }}
+        </div>
+        {{ form_widget(form.submit) }}
+        {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest' : false}) }}
+
+    <script type="text/javascript">
+        var container = document.getElementById("pc_exchangebundle_element_elementArtists");
+        var index = 0;
+
+        while(index < 2) {
+            addElementArtists(container);
+        }
+
+        document.getElementById("addArtist").addEventListener('click', function(e) {
+            addElementArtists(container);
+        })
+
+        function addElementArtists(container)
+        {
+            var template = container.getAttribute('data-prototype')
+                .replace(/__name__label__/g, 'artist_' + (index+1))
+                .replace(/__name__/g, index);
+
+            var newInput = document.createElement("div")
+            newInput.innerHTML = template;
+            container.appendChild(newInput);
+
+            var artistOption = document.getElementById("pc_exchangebundle_element_elementArtists_"+index+"_role");
+            artistOption.selectedIndex = index;
+
+            index++;
+
+        }
+    </script>
+{% endblock %}

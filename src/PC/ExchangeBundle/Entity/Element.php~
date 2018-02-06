@@ -1,0 +1,312 @@
+<?php
+
+namespace PC\ExchangeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Element
+ *
+ * @ORM\Table(name="element")
+ * @ORM\Entity(repositoryClass="PC\ExchangeBundle\Repository\ElementRepository")
+ */
+class Element
+{
+    /**
+     *@ORM\OneToOne(targetEntity="PC\ExchangeBundle\Entity\Image", cascade={"persist"})
+     */
+    private $image;
+
+    /**
+     *@ORM\ManyToMany(targetEntity="PC\ExchangeBundle\Entity\Category")
+     */
+    private $categories;
+
+    /**
+     *@ORM\OneToMany(targetEntity="PC\ExchangeBundle\Entity\ElementArtist", mappedBy="element")
+     */
+    private $elementArtists;
+
+    /**
+     *@ORM\ManyToOne(targetEntity="PC\ExchangeBundle\Entity\Publisher")
+     */
+    private $publisher;
+
+
+    /**
+     *@ORM\ManyToOne(targetEntity="PC\ExchangeBundle\Entity\Type")
+     *@ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    private $type;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="publicationDate", type="date")
+     */
+    private $publicationDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ISBN", type="string", length=255)
+     */
+    private $iSBN;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="synopsis", type="text")
+     */
+    private $synopsis;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Element
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     *
+     * @return Element
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set publicationDate
+     *
+     * @param \DateTime $publicationDate
+     *
+     * @return Element
+     */
+    public function setPublicationDate($publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get publicationDate
+     *
+     * @return \DateTime
+     */
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
+    }
+
+    /**
+     * Set iSBN
+     *
+     * @param string $iSBN
+     *
+     * @return Element
+     */
+    public function setISBN($iSBN)
+    {
+        $this->iSBN = $iSBN;
+
+        return $this;
+    }
+
+    /**
+     * Get iSBN
+     *
+     * @return string
+     */
+    public function getISBN()
+    {
+        return $this->iSBN;
+    }
+
+    /**
+     * Set synopsis
+     *
+     * @param string $synopsis
+     *
+     * @return Element
+     */
+    public function setSynopsis($synopsis)
+    {
+        $this->synopsis = $synopsis;
+
+        return $this;
+    }
+
+    /**
+     * Get synopsis
+     *
+     * @return string
+     */
+    public function getSynopsis()
+    {
+        return $this->synopsis;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \PC\ExchangeBundle\Entity\Image $image
+     *
+     * @return Element
+     */
+    public function setImage(\PC\ExchangeBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \PC\ExchangeBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->elementArtists = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add category
+     *
+     * @param \PC\ExchangeBundle\Entity\Category $category
+     *
+     * @return Element
+     */
+    public function addCategory(\PC\ExchangeBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \PC\ExchangeBundle\Entity\Category $category
+     */
+    public function removeCategory(\PC\ExchangeBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+
+    /**
+     * Add elementArtist
+     *
+     * @param \PC\ExchangeBundle\Entity\ElementArtist $elementArtist
+     *
+     * @return Element
+     */
+    public function addElementArtist(\PC\ExchangeBundle\Entity\ElementArtist $elementArtist)
+    {
+        $this->elementArtists[] = $elementArtist;
+
+        return $this;
+    }
+
+    /**
+     * Remove elementArtist
+     *
+     * @param \PC\ExchangeBundle\Entity\ElementArtist $elementArtist
+     */
+    public function removeElementArtist(\PC\ExchangeBundle\Entity\ElementArtist $elementArtist)
+    {
+        $this->elementArtists->removeElement($elementArtist);
+    }
+
+    /**
+     * Get elementArtists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getElementArtists()
+    {
+        return $this->elementArtists;
+    }
+}

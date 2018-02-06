@@ -1,0 +1,122 @@
+{% extends "@PCExchange/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Review
+{% endblock %}
+
+{% block body %}
+<section id = "reviewFormContainer">
+
+    {{ form_start(form) }}
+    <h2>votre critique : </h2>
+        <div>
+            {{ form_widget(form.review) }}
+            <p>note : {{ form_widget(form.score) }}</p>
+        </div>
+
+        <div id="criterionContainer">
+            {% if criteria is defined %}
+                <h2>drag and drop your criteria</h2>
+                {% for criterion in criteria %}
+
+                        <button class="draggableButton" draggable="true" id="{{ criterion.id }}"><h2>{{ criterion.critName }}</h2></button>
+
+                {% endfor %}
+            {% endif %}
+
+
+            <div id = "formInput" class = "dropArea">
+                {{ form_row(form.reviewCriterions) }}
+            </div>
+            <div id = "formConsInput" class = "dropArea">
+            </div>
+        </div>
+
+        <div>
+            {{ form_widget(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+</section>
+
+
+    <script type="text/javascript">
+        var dragButton = document.getElementsByClassName("draggableButton");
+        var container = document.getElementById("pc_exchangebundle_review_reviewCriterions");
+        var dropArea = document.querySelectorAll(".dropArea");
+        var index = 0;
+
+        for(var i = 0; i<12; i++) {
+            if (document.getElementById("pc_exchangebundle_review_reviewCriterions_"+i) != null) {
+                removeInput(document.getElementById("pc_exchangebundle_review_reviewCriterions_"+i));
+            }
+        }
+
+        for(var i = 0; i<dragButton.length; i++) {
+            dragButton[i].addEventListener('dragstart', function(e) {
+                this.draggedElement = e.target;
+                clone = this.draggedElement.cloneNode(true);
+                e.dataTransfer.setData("text/plain", this.draggedElement.innerText);
+            })
+        }
+
+        for(var i = 0; i<dropArea.length; i++) {
+
+            dropArea[i].addEventListener('dragover', function(e)  {
+                e.preventDefault();
+            })
+
+            dropArea[i].addEventListener('drop', function(e) {
+                e.preventDefault();
+                var target = e.target;
+                var dragged = e.dataTransfer.getData("text/plain");
+                while(target.className.indexOf('dropArea') == -1) {
+                    target = target.parentNode;
+                }
+                var template = container.getAttribute('data-prototype')
+                    .replace(/__name__label__/g, 'criterion_' + (index+1))
+                    .replace(/__name__/g, index);
+
+                var newInput = document.createElement("div")
+                newInput.innerHTML = template;
+                //suppression d'un critère
+                removeInput(newInput);
+
+                target.appendChild(container.appendChild(newInput));
+
+                var cInput = document.getElementById("pc_exchangebundle_review_reviewCriterions_"+index+"_criterion_critName");
+                if(target == dropArea[0]) {
+                    document.getElementById("pc_exchangebundle_review_reviewCriterions_"+index+"_bias").checked = true;
+                }
+                cInput.value += dragged;
+                cInput.readOnly = true;
+                index++;
+
+                alert(dragged);
+            })
+
+
+
+
+        };
+
+        function removeInput(InputToDelete) {
+            var deleteButton = document.createElement("a");
+            deleteButton.setAttribute('href', '#');
+            deleteButton.innerText = 'cancel';
+            InputToDelete.appendChild(deleteButton);
+
+            deleteButton.addEventListener('click', function(e) {
+                InputToDelete.remove();
+            });
+        }
+        /*for(var i = 0; i < criterionCheck.length; i++) {
+            if(criterionCheck[i].value == dragged) {
+                criterionCheck[i].checked = true;
+            }
+        }*/
+
+        /*document.getElementById("dropZone").addEventListener('dragleave', function(e) {
+            this.removeChild(e.target);
+        });*/
+    </script>
+{% endblock %}

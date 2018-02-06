@@ -1,0 +1,29 @@
+pc_exchange_home:
+    path:    /
+    defaults: { _controller: PCExchangeBundle:Element:index }
+
+pc_exchange_view:
+    path:    /element/{id}
+    defaults: { _controller: PCExchangeBundle:Element:view }
+    requirements:
+        id: \d+
+
+pc_exchange_add:
+    path:    /add
+    defaults: { _controller: PCExchangeBundle:Element:add }
+
+pc_exchange_subscribe:
+    path:    /subscribe
+    defaults: { _controller: PCExchangeBundle:Subscription:form }
+
+pc_exchange_add_review:
+    path:    /addreview
+    defaults: { _controller: PCExchangeBundle:Review:add }
+
+pc_exchange_delete_review:
+    path:   /deletereview/{reviewId}
+    defaults: { _controller: PCExchangeBundle:Review:delete }
+
+pc_exchange_edit_review:
+    path:   /editreview/{reviewId}
+    defaults: { _controller: PCExchangeBundle:Review:edit }

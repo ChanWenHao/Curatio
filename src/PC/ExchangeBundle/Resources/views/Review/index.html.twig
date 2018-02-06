@@ -1,0 +1,45 @@
+{% if reviewList is defined %}
+
+<section id="evaluation">
+    <h3>average score : {{ score }}</h3>
+    <div>
+        <h2>Pros</h2>
+        {% if pros is defined %}
+            {% for pro in pros %}
+                {% for rcPro in pro.reviewCriterions %}
+                    <p>{{ rcPro.criterion.critName }}<p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div>
+        <h2>Cons</h2>
+        {% if cons is defined %}
+            {% for con in cons %}
+                {% for rcCons in con.reviewCriterions %}
+                    <p>{{ rcCons.criterion.critName }}<p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+    {% for review in reviewList %}
+        <div class='reviewItem'>
+
+            <p>{{ review.date|date("Y/m/d") }} by {{ review.user.username }}</p>
+            <p>{{ review.review }}</p>
+            <p>evaluation {{ review.score }}
+                {% if app.user.username is defined and app.user.username == review.user.username %}
+                    <a href="{{ path('pc_exchange_delete_review', { 'reviewId': review.id }) }}" id="deleteReview">
+                        delete
+                    </a>
+                    <a href="{{ path('pc_exchange_edit_review', { 'reviewId': review.id }) }}" id="editReview">
+                        edit
+                    </a>
+                {% endif %}
+            </p>
+
+        </div>
+    {% endfor %}
+{% endif %}

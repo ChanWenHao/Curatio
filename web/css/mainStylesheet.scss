@@ -1,0 +1,449 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
+$bg_color: #FFFFFF;
+$blackish: #0A1A1A;
+$main_color: #422DBA;
+$supp_color: #A7A2DD;
+$tierce_color: #DB168C;
+$avoid_white: #F1F1F1;
+$main_shade: #362BA3;
+$supp_font: 'Quicksand', sans-serif;
+$tierce_font: 'Economica';
+
+@mixin floateur {
+  color: $supp_color;
+  font:{
+    family: $tierce_font, cursive;
+    weight: lighter;
+  }
+}
+
+@mixin transition($propriete, $duree, $exec) {
+  -webkit-transition: $propriete $duree $exec;
+  -moz-transition: $propriete $duree $exec;
+  -ms-transition: $propriete $duree $exec;
+  -o-transition: $propriete $duree $exec;
+  transition: $propriete $duree $exec;
+}
+
+@mixin transform($select) {
+  -webkit-transform: $select;
+  -moz-transform: $select;
+  -ms-transform: $select;
+  -o-transform: $select;
+  transform: $select;
+}
+
+@mixin animation($type, $exec, $duree) {
+  -webkit-animation: $type $exec $duree;
+  -moz-animation: $type $exec $duree;
+  -ms-animation: $type $exec $duree;
+  -o-animation: $type $exec $duree;
+  animation: $type $exec $duree;
+}
+
+@mixin animationFill($type) {
+  -webkit-animation-fill-mode: $type;
+  -moz-animation-fill-mode: $type;
+  -ms-animation-fill-mode: $type;
+  -o-animation-fill-mode: $type;
+  animation-fill-mode: $type;
+}
+
+@mixin transformOrigin($i, $j) {
+  -webkit-transform-origin: $i $j;
+  -moz-transform-origin: $i $j;
+  -ms-transform-origin: $i $j;
+  -o-transform-origin: $i $j;
+  transform-origin: $i $j;
+}
+
+@mixin select($status) {
+    -webkit-user-select: $status;
+    -moz-user-select: $status;
+    -ms-user-select: $status;
+    user-select: $status;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  background-color: $bg_color;
+
+}
+
+header {
+    width: 100%;
+    h1 {
+        margin-left: 6.5%;
+    }
+}
+
+p {
+  font:{
+    family: $tierce_font;
+    weight: normal;
+    size: 1.1em;
+  }
+}
+
+h1 {
+  font:{
+    family: $supp_font;
+    weight: bold;
+    size: 2.25em;
+  }
+}
+
+h2 {
+  font:{
+    family: $supp_font;
+    weight: lighter;
+    size: 1.15em;/*1.35em*/
+  }
+}
+
+h3 {
+  font:{
+    family: $tierce_font;
+    size: 1.4em; /*si retour à Poiret One: 0.75em uppercase*/
+  }
+  text-transform: uppercase;
+}
+
+a {
+  text-decoration: none;
+  color: $main_color;
+  @include transition(color, .4s, linear);
+  &:hover {
+    color: $supp_color;
+  }
+}
+
+button[type=submit] {
+    cursor : pointer;
+    font:{
+      family: $tierce_font;
+      weight: normal;
+      size: 1.2em;
+    }
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+input[type=search] {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: $supp_color;
+    border-width: thin;
+    background-color: $bg_color;
+    &:focus {
+        outline: none;
+    }
+}
+
+.nav-menu {
+    height: 10vh;
+    width: 100%;
+    background-color: $main_color;
+    color: $bg_color;
+    ul {
+        margin-left: 6.5%;
+        li {
+            margin-top: 3.5vh;
+            display: inline-block;
+            width: 7.5%;
+            font:{
+              family: $tierce_font;
+              size: 1.1em;
+            }
+            a {
+                color: $bg_color;
+                &:hover {
+                  color: $supp_color;
+                }
+            }
+        }
+    }
+}
+
+#wrapper {
+    display: grid;
+    height: auto;
+    width: 100%;
+    margin: auto;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-areas:
+        "search search search search"
+        "filter element element element"
+        "footer footer footer footer";
+    h1 {
+        width: 100%;
+    }
+}
+
+.formContainer {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-column-end: 5;
+
+}
+
+#Exchange_searchForm {
+    grid-area: search;
+    /*grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 5;*/
+    display: flex;
+    height: 10vh;
+    input {
+        padding-left: 6%;
+        height: 100%;
+        width: 85%;
+        font:{
+          family: $supp_font;
+          weight: lighter;
+          size: 2em;/*1.35em*/
+        }
+    }
+    button[type=submit] {
+        width: 7.5%;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        border-bottom: solid;
+        border-width: thin;
+        border-color: $supp_color;
+        &:before {
+            font-family: FontAwesome;
+            content: '\f002'
+        }
+        background: none ;
+        color: $main_color;
+    }
+    a {
+        text-align: center;
+        padding-top: 1.5%;
+        display: block;
+        background-color: $supp_color;
+        width: 7.5%;
+        font-size: 2em;
+        font-weight: bolder;
+    }
+}
+
+#Exchange_filterForm {
+    z-index: 2;
+    grid-area: filter;
+    height: auto;
+    width: 25%;
+    font:{
+      family: $tierce_font;
+      weight: normal;
+    }
+    h2 {
+        margin-top: 10%;
+        margin-bottom: 10%;
+        margin-left: 25%;
+    }
+    label {
+        margin-top: 1%;
+        width: 40%
+    }
+    input {
+        margin-top: 1%;
+        width: 60%;
+    }
+    button[type=submit] {
+        background: $main_color ;
+        border-radius: 25px;
+        border: none;
+        color: $bg_color;
+        padding-top: 2.5%;
+        padding-bottom: 2.5%;
+        margin-left: 25%;
+        margin-top: 7.5%;
+    }
+
+    #pc_exchangebundle_element_type {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        label {
+            margin-top: 1%;
+            width: 20%
+        }
+        input {
+            margin-top: 1%;
+            width: 60%;
+        }
+    }
+
+    #pc_exchangebundle_element_categories {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        label {
+            margin-top: 1%;
+            width: 20%;
+        }
+        input {
+            margin-top: 1%;
+            width: 60%;
+        }
+    }
+}
+
+.eltContainer {
+    z-index: 3;
+    grid-row-start: 1;
+    grid-column: 2 / span 3;
+    margin-top: 7.5%;
+    display: flex;
+    flex-wrap: wrap;
+    .eltContainer__element {
+        margin-left: 1%;
+        width: 22%;
+        height: 400px;
+        margin-top: .5%;
+        background-color: white;
+        /*box-shadow: 1px 1px 1px 0.5px rgba(0, 0, 0, 0.05);
+        @include transition(box-shadow, 0.3s, ease-in-out);
+        &:hover {
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+        }*/
+        figure {
+            height: 75%;
+            width: 100%;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10%;
+            img {
+                height: 100%;
+                min-width: 100%;
+                margin-left: -25%;
+            }
+        }
+        h3 {
+            margin-top: 5%;
+            margin-left: 5%;
+        }
+        p {
+            margin-left: 5%;
+        }
+    }
+}
+
+#elementHeroImg {
+    margin-top: 2.5%;
+    margin-left: 20%;
+    width: 60%;
+    height: 35%;
+    overflow: hidden;
+    img {
+        width : 100%;
+    }
+}
+
+#element_content {
+    width: 60%;
+    margin-left: 20%;
+    padding-left: 2.5%;
+    h1 {
+        margin-top: 2.5%;
+    }
+    #author_container {
+        margin-top: 2.5%;
+    }
+    p {
+        margin-top: 5%;
+        width: 90%;
+        margin-bottom: 2.5%;
+    }
+}
+
+#review_container {
+    width: 60%;
+    margin-left: 20%;
+    padding-left: 2.5%;
+    margin-top: 2.5%;
+}
+
+.reviewItem {
+    margin-top: 5%;
+}
+
+#reviewFormContainer {
+    padding-top: 1%;
+    form {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2.5%;
+        textarea {
+            width: 100%;
+            height: 300px;
+        }
+        #criterionContainer {
+            margin-top: 2.5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            h2 {
+                width: 100%;
+                margin-bottom: 2%;
+            }
+            button {
+                width: 8%;
+                background: none;
+                border: none;
+            }
+            .dropArea {
+                margin-top: 2%;
+                width: 48%;
+                height: 300px;;
+                box-shadow: -1px 2px 5px 3px rgba(0, 0, 0, 0.2) inset;
+                padding-left: 2%;
+                padding-top: 2%;
+                input[type='checkbox'] {
+                    display:none;
+                }
+                div:nth-Child(1) { width: 100%; }
+                input {
+                    width: 80%;
+                    font:{
+                      family: $tierce_font;
+                      weight: normal;
+                      size: 1.1em;
+                    }
+                }
+                font:{
+                  family: $tierce_font;
+                  weight: normal;
+                  size: 1.1em;
+                }
+                label { display: none; }
+            }
+        }
+    }
+}
+
+#evaluation {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    h3 { width: 100%; margin-bottom: 2.5%;}
+    div {width: 48%;}
+
+}
